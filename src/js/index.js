@@ -18,11 +18,14 @@ async function handlerForm(event) {
   configUrl.params.q = event.target.searchQuery.value;
   try {
     data = await fetchGallery();
-    if (data.data.hits.length === 0) return infoOnRequest();
+    if (data.data.hits.length === 0) {
+      return infoOnRequest();
+    }
     infoCorrectRequest(data.data.totalHits);
     const markupGalerry = createMarkup(data);
     elements.galleryBox.innerHTML = markupGalerry;
   } catch (error) {
+    console.log(error);
     errorGet(error);
   }
 }
