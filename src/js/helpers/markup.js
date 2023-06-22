@@ -1,5 +1,4 @@
 function createMarkup({ data: { hits } }) {
-  console.log(hits);
   return hits
     .map(
       ({
