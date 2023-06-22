@@ -17,7 +17,7 @@ async function handlerForm(event) {
   event.preventDefault();
   configUrl.params.q = event.target.searchQuery.value;
   try {
-    data = await fetchGallery();
+    const data = await fetchGallery();
     if (data.data.hits.length === 0) {
       return infoOnRequest();
     }
