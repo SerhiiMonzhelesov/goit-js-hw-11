@@ -15,11 +15,22 @@ function infoOnRequest() {
 }
 
 function infoCorrectRequest(totalHits) {
-  Notify.info(`Hooray! We found ${totalHits} images.`, {
+  Notify.success(`Hooray! We found ${totalHits} images.`, {
     position: 'center-center',
     width: '500px',
     fontSize: '30px',
+    timeout: '1700',
+    backOverlayColor: (0, 0, 0, 0.7),
   });
 }
 
-export { errorGet, infoOnRequest, infoCorrectRequest };
+function infoEndGallery() {
+  Notify.info(`WE'RE SORRY, BUT YOU'VE REACHED THE END OF SEARCH RESULTS`, {
+    position: 'center-center',
+    width: '500px',
+    fontSize: '30px',
+    timeout: '1700',
+  });
+}
+
+export { errorGet, infoOnRequest, infoCorrectRequest, infoEndGallery };

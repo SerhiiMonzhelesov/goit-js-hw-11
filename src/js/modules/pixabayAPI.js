@@ -1,4 +1,4 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
 const configUrl = {
   params: {
@@ -14,8 +14,11 @@ const configUrl = {
 
 async function fetchGallery() {
   const data = await axios('https://pixabay.com/api/', configUrl);
-  configUrl.params.q = '';
   return data;
 }
 
-export { fetchGallery, configUrl };
+async function fetchMoreImg() {
+  return await axios('https://pixabay.com/api/', configUrl);
+}
+
+export { fetchGallery, fetchMoreImg, configUrl };
