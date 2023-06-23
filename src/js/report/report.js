@@ -3,14 +3,27 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 function errorGet({ code, response }) {
   console.log(response);
-  Report.failure(`${code}`, `${response.data}`, 'OK');
+  Report.failure(`${code}`, `${response.data}`, 'OK', {
+    width: '500px',
+    messageFontSize: '18px',
+    titleFontSize: '35px',
+    svgSize: '70px',
+    backOverlayClickToClose: true,
+  });
 }
 
 function infoOnRequest() {
   Report.info(
-    'INFO',
-    'Sorry, there are no images matching your search query. Please try again.',
-    'OK'
+    'SORRY',
+    '"There are no images matching your search query. <br/><br/>Please try again"',
+    'OK',
+    {
+      width: '500px',
+      messageFontSize: '25px',
+      titleFontSize: '35px',
+      svgSize: '70px',
+      backOverlayClickToClose: true,
+    }
   );
 }
 
@@ -21,6 +34,7 @@ function infoCorrectRequest(totalHits) {
     fontSize: '30px',
     timeout: '1700',
     backOverlayColor: (0, 0, 0, 0.7),
+    useIcon: false,
   });
 }
 
@@ -30,6 +44,7 @@ function infoEndGallery() {
     width: '500px',
     fontSize: '30px',
     timeout: '1700',
+    useIcon: false,
   });
 }
 
