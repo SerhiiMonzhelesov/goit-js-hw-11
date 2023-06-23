@@ -22,6 +22,7 @@ elements.form.addEventListener('submit', handlerForm);
 async function handlerForm(event) {
   event.preventDefault();
   try {
+    observer.unobserve(elements.guard);
     elements.galleryBox.innerHTML = '';
     configUrl.params.q = event.target.searchQuery.value;
     const data = await fetchGallery();
