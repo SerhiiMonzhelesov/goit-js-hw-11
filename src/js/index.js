@@ -1,13 +1,13 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchGallery, fetchMoreImg, configUrl } from './modules/pixabayAPI';
+import { fetchImages } from './pixabayAPI';
 import {
   errorGet,
   infoOnRequest,
   infoCorrectRequest,
   infoEndGallery,
-} from './report/report';
-import { createMarkup } from './helpers/markup';
+} from './report';
+import { createMarkup } from './markup';
 
 const elements = {
   form: document.querySelector('.search-form'),
@@ -17,6 +17,9 @@ const elements = {
 };
 
 let totalHits;
+let query = '';
+let currentPage;
+const resultPerPage = 40;
 elements.form.addEventListener('submit', handlerForm);
 
 async function handlerForm(event) {
@@ -24,11 +27,14 @@ async function handlerForm(event) {
   try {
     observer.unobserve(elements.guard);
     elements.galleryBox.innerHTML = '';
-    configUrl.params.q = event.target.searchQuery.value;
-    configUrl.params.page = 1;
-    const data = await fetchGallery();
+
+    query = event.target.searchQuery.value;
+    currentPage = 1;
+
+    const data = await fetchImages(query, currentPage, resultPerPage);
     totalHits = data.data.totalHits;
-    if (data.data.hits.length === 0) {
+
+    if (!data.data.hits.length) {
       return infoOnRequest();
     }
     infoCorrectRequest(totalHits);
@@ -57,14 +63,12 @@ function loadMore(entries, observer) {
 
 async function loadImage() {
   try {
-    if (
-      configUrl.params.page >= Math.ceil(totalHits / configUrl.params.per_page)
-    ) {
+    if (currentPage >= Math.ceil(totalHits / resultPerPage)) {
       observer.unobserve(elements.guard);
       infoEndGallery();
     } else {
-      configUrl.params.page += 1;
-      const data = await fetchMoreImg();
+      currentPage += 1;
+      const data = await fetchImages(query, currentPage, resultPerPage);
       elements.galleryBox.insertAdjacentHTML('beforeend', createMarkup(data));
       scroll();
       simple.refresh();
@@ -87,7 +91,7 @@ function scroll() {
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight,
     behavior: 'smooth',
   });
 }
