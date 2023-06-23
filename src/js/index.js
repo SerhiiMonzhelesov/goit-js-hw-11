@@ -20,6 +20,7 @@ let totalHits;
 let query = '';
 let currentPage;
 const resultPerPage = 40;
+
 elements.form.addEventListener('submit', handlerForm);
 
 async function handlerForm(event) {
