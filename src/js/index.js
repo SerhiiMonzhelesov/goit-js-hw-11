@@ -25,6 +25,7 @@ async function handlerForm(event) {
     observer.unobserve(elements.guard);
     elements.galleryBox.innerHTML = '';
     configUrl.params.q = event.target.searchQuery.value;
+    configUrl.params.page = 1;
     const data = await fetchGallery();
     totalHits = data.data.totalHits;
     if (data.data.hits.length === 0) {
@@ -60,7 +61,6 @@ async function loadImage() {
       configUrl.params.page >= Math.ceil(totalHits / configUrl.params.per_page)
     ) {
       observer.unobserve(elements.guard);
-      configUrl.params.page = 1;
       infoEndGallery();
     } else {
       configUrl.params.page += 1;
