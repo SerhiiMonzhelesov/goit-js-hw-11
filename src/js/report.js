@@ -2,12 +2,11 @@ import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 function errorGet({ code, response }) {
-  console.log(response);
   Report.failure(`${code}`, `${response.data}`, 'OK', {
-    width: '500px',
-    messageFontSize: '18px',
-    titleFontSize: '35px',
-    svgSize: '70px',
+    width: '400px',
+    messageFontSize: '16px',
+    titleFontSize: '32px',
+    svgSize: '65px',
     backOverlayClickToClose: true,
   });
 }
